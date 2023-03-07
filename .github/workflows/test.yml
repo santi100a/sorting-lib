@@ -1,0 +1,35 @@
+name: Continuous Integration (CI)
+
+on:
+  push:
+    branches: 
+      - main 
+    paths:
+      - src/*.*
+      - .github/workflows/*.*
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 19.x
+          always-auth: true
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build source code
+        run: yarn build
+
+      - name: Run test suites
+        run: yarn test
+  release:
+    needs: test
+    uses: ./.github/workflows/release.yml
+    secrets: 
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      GPR_AUTH_TOKEN: ${{ secrets.GPR_AUTH_TOKEN }}
