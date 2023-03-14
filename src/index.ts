@@ -176,6 +176,7 @@ export function selectionSort<T = unknown>(
 	}
 	return array;
 }
+
 /**
  * Sorts `arr` with merge-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
  *
