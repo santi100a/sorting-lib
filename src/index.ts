@@ -17,66 +17,76 @@ export interface SortOptions<T = unknown> {
 	 * Comparator function for every sorting algorithm, except for {@link radixSort}.
 	 * It's fully compatible with {@link Array.prototype.sort}'s callback. See {@link SortComparator}.
 	 */
-    comparator?: SortComparator<T>;
+	comparator?: SortComparator<T>;
 	/**
 	 * Sorting order string. Must be either `ascending` or `descending`. See {@link SortOrder}.
 	 */
-    order?: SortOrder;
+	order?: SortOrder;
 }
 /**
  * Shape of the `opts` object exclusive to {@link radixSort}.
+ * The only thing it overrides is the comparator so it's forcibly `undefined`.
  */
 export interface RadixSortOptions extends SortOptions<number> {
-    comparator?: undefined;
+	comparator?: never;
 }
 // ---END TYPES---
 // ---START HELPERS---
 function __defAscending(a: any, b: any) {
-    if (a < b) return -1;
-    if (a > b) return 1;
-    return 0;
+	if (a < b) return -1;
+	if (a > b) return 1;
+	return 0;
 }
 function __reverse<T>(arr: T[]): T[] {
-    return arr.slice().reverse();
-  }
-  
+	return arr.slice().reverse();
+}
+
 function __defDescending(a: any, b: any) {
-    if (a < b) return 1;
-    if (a > b) return -1;
-    return 0;
+	if (a < b) return 1;
+	if (a > b) return -1;
+	return 0;
 }
 function __isArray(a: any) {
-    return Array?.isArray(a) || a instanceof Array;
+	return Array?.isArray(a) || a instanceof Array;
 }
 function __isObject(a: any) {
-    return typeof a === 'object' && !(__isNullOrUndefined(a)) && !(__isArray(a));
+	return typeof a === 'object' && !__isNullOrUndefined(a) && !__isArray(a);
 }
 function __isNullOrUndefined(a: any) {
-    return a === null || a === undefined;
+	return a === null || a === undefined;
 }
 function __validateOrder(a: string & SortOrder) {
-    if (a === 'ascending' || a === 'descending') return true;
-    return false;
+	if (a === 'ascending' || a === 'descending') return true;
+	return false;
 }
 
 function __checkErrors<T = unknown>(arr: any[], opts: SortOptions<T>) {
-    if (!__isArray(arr)) 
-        throw new TypeError(`"arr" must be an Array. Got "${arr}" of type "${typeof arr}".`);
-    if (!__isObject(opts))
-        throw new TypeError(`"opts" must be an Object. Got "${opts}" of type "${typeof opts}".`);
-    if ((!__isNullOrUndefined(opts.order)) && !(__validateOrder(opts.order as SortOrder)))
-        throw new TypeError(
-            `"opts.order", if specified, must be one of "ascending" or "descending". Got "${opts.order}".`
-        )
+	if (!__isArray(arr))
+		throw new TypeError(
+			`"arr" must be an Array. Got "${arr}" of type "${typeof arr}".`
+		);
+	if (!__isObject(opts))
+		throw new TypeError(
+			`"opts" must be an Object. Got "${opts}" of type "${typeof opts}".`
+		);
+	if (
+		!__isNullOrUndefined(opts.order) &&
+		!__validateOrder(opts.order as SortOrder)
+	)
+		throw new TypeError(
+			`"opts.order", if specified, must be one of "ascending" or "descending". Got "${opts.order}".`
+		);
 }
 function __isInteger(num: number) {
-	if (typeof num !== 'number') return false;
-    return Number?.isInteger?.(num) || (num < 0 ? Math.ceil(num) : Math.floor(num)) === num;
+	return (
+		Number?.isInteger?.(num) ||
+		(num < 0 ? Math.ceil(num) : Math.floor(num)) === num
+	);
 }
 // ---END HELPERS---
 /**
  * Sorts `arr` with bubble-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
- * 
+ *
  * **Time complexity:** Quadratic (O(n ^ 2)).
  * @param arr The array to sort.
  * @param opts Sorting options. See {@link SortOptions}.
@@ -102,11 +112,11 @@ export function bubbleSort<T = unknown>(arr: T[], opts: SortOptions<T> = {}) {
 }
 /**
  * Sorts `arr` with insertion-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
- * 
+ *
  * **Time complexity (average and worst-case):** Quadratic (O(n ^ 2)).
- * 
+ *
  * **Time complexity (best-case):** Linear (O(n)).
- * 
+ *
  * @param arr The array to sort.
  * @param opts Sorting options. See {@link SortOptions}.
  * @returns A sorted copy of `arr`.
@@ -136,9 +146,9 @@ export function insertionSort<T = unknown>(
 }
 /**
  * Sorts `arr` with selection-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
- * 
+ *
  * **Time complexity (average and worst-case):** Quadratic (O(n ^ 2)).
- * 
+ *
  * @param arr The array to sort.
  * @param opts Sorting options. See {@link SortOptions}.
  * @returns A sorted copy of `arr`.
@@ -168,9 +178,9 @@ export function selectionSort<T = unknown>(
 }
 /**
  * Sorts `arr` with merge-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
- * 
+ *
  * **Time complexity (average and worst-case):** Quasi-linear (O(n * log(n))).
- * 
+ *
  * @param arr The array to sort.
  * @param opts Sorting options. See {@link SortOptions}.
  * @returns A sorted copy of `arr`.
@@ -226,11 +236,11 @@ function __merge<T>(left: T[], right: T[], comparator: SortComparator<T>): T[] {
 }
 /**
  * Sorts `arr` with selection-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
- * 
+ *
  * **Time complexity (best and average):** Quasi-linear (O(n * log(n))).
- * 
+ *
  * **Time complexity (worst)**: Quadratic (O(n ^ 2)).
- * 
+ *
  * @param arr The array to sort.
  * @param opts Sorting options. See {@link SortOptions}.
  * @returns A sorted copy of `arr`.
@@ -284,9 +294,9 @@ export function quickSort<T = unknown>(arr: T[], opts: SortOptions<T> = {}) {
 
 /**
  * Sorts `arr` with bogo-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
- * 
+ *
  * **Time complexity (average):** Linear-factorial (O(n * n!)).
- * 
+ *
  * **Worst-case time complexity:** Infinity (O(∞)).
  * @param arr The array to sort.
  * @param opts Sorting options. See {@link SortOptions}.
@@ -329,8 +339,8 @@ export function bogoSort<T = unknown>(arr: T[], opts: SortOptions<T> = {}) {
 
 /**
  * Sorts `arr` with radix-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
- * 
- * **Time complexity (best, average and worst):** O(n * k), where `k` is the number of digits or characters in the 
+ *
+ * **Time complexity (best, average and worst):** O(n * k), where `k` is the number of digits or characters in the
  * largest element.
  * @param arr The array to sort.
  * @param opts Sorting options. See {@link SortOptions}.
@@ -339,12 +349,12 @@ export function bogoSort<T = unknown>(arr: T[], opts: SortOptions<T> = {}) {
 export function radixSort(arr: number[], opts: RadixSortOptions = {}) {
 	__checkErrors<number>(arr, opts);
 	for (const item of arr) {
-		if (!__isInteger(item)) 
-		throw new TypeError(
-			`"arr" must be an Array of integers. Item #${arr?.indexOf?.(item)} of "arr" is "${
-				item
-			}" of type "${typeof item}".`
-		);
+		if (!__isInteger(item))
+			throw new TypeError(
+				`"arr" must be an Array of integers. Item #${arr?.indexOf?.(
+					item
+				)} of "arr" is "${item}" of type "${typeof item}".`
+			);
 	}
 	let array = [...arr];
 	const { order = 'ascending' } = opts;
@@ -368,4 +378,70 @@ export function radixSort(arr: number[], opts: RadixSortOptions = {}) {
 		array = ([] as number[]).concat(...buckets);
 	}
 	return order === 'ascending' ? array : __reverse(array);
+}
+
+/**
+ * Sorts `arr` with heap-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
+ *
+ * **Time complexity (best, average and worst):** Quasi-linear (O(n log n)).
+ * @param arr The array to sort.
+ * @param opts Sorting options. See {@link SortOptions}.
+ * @returns A sorted copy of `arr`.
+ */
+export function heapSort<T = unknown>(arr: T[], opts: SortOptions<T> = {}) {
+	__checkErrors(arr, opts);
+	const { comparator = __defAscending, order = 'ascending' } = opts;
+	const n = arr.length;
+
+	// build heap
+	for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+		__heapify(arr, i, n, comparator, order);
+	}
+
+	// extract elements from heap
+	for (let i = n - 1; i > 0; i--) {
+		__swap(arr, 0, i);
+		__heapify(arr, 0, i, comparator, order);
+	}
+
+	function compare<T>(
+		a: T,
+		b: T,
+		comparator: SortComparator<T>,
+		order: SortOrder
+	) {
+		const cmp = comparator(a, b);
+		return order === 'ascending' ? cmp : -cmp;
+	}
+
+	function __swap<T>(arr: T[], i: number, j: number) {
+		const tmp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = tmp;
+	}
+	function __heapify<T>(
+		arr: T[],
+		i: number,
+		n: number,
+		comparator: SortComparator<T>,
+		order: SortOrder
+	) {
+		let largest = i;
+		const left = 2 * i + 1;
+		const right = 2 * i + 2;
+
+		if (left < n && compare(arr[left], arr[largest], comparator, order) > 0) {
+			largest = left;
+		}
+
+		if (right < n && compare(arr[right], arr[largest], comparator, order) > 0) {
+			largest = right;
+		}
+
+		if (largest !== i) {
+			__swap(arr, i, largest);
+			__heapify(arr, largest, n, comparator, order);
+		}
+	}
+	return arr;
 }

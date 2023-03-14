@@ -9,7 +9,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 exports.__esModule = true;
-exports.radixSort = exports.bogoSort = exports.quickSort = exports.mergeSort = exports.selectionSort = exports.insertionSort = exports.bubbleSort = void 0;
+exports.heapSort = exports.radixSort = exports.bogoSort = exports.quickSort = exports.mergeSort = exports.selectionSort = exports.insertionSort = exports.bubbleSort = void 0;
 // ---END TYPES---
 // ---START HELPERS---
 function __defAscending(a, b) {
@@ -33,7 +33,7 @@ function __isArray(a) {
     return (Array === null || Array === void 0 ? void 0 : Array.isArray(a)) || a instanceof Array;
 }
 function __isObject(a) {
-    return typeof a === 'object' && !(__isNullOrUndefined(a)) && !(__isArray(a));
+    return typeof a === 'object' && !__isNullOrUndefined(a) && !__isArray(a);
 }
 function __isNullOrUndefined(a) {
     return a === null || a === undefined;
@@ -48,14 +48,14 @@ function __checkErrors(arr, opts) {
         throw new TypeError("\"arr\" must be an Array. Got \"".concat(arr, "\" of type \"").concat(typeof arr, "\"."));
     if (!__isObject(opts))
         throw new TypeError("\"opts\" must be an Object. Got \"".concat(opts, "\" of type \"").concat(typeof opts, "\"."));
-    if ((!__isNullOrUndefined(opts.order)) && !(__validateOrder(opts.order)))
+    if (!__isNullOrUndefined(opts.order) &&
+        !__validateOrder(opts.order))
         throw new TypeError("\"opts.order\", if specified, must be one of \"ascending\" or \"descending\". Got \"".concat(opts.order, "\"."));
 }
 function __isInteger(num) {
     var _a;
-    if (typeof num !== 'number')
-        return false;
-    return ((_a = Number === null || Number === void 0 ? void 0 : Number.isInteger) === null || _a === void 0 ? void 0 : _a.call(Number, num)) || (num < 0 ? Math.ceil(num) : Math.floor(num)) === num;
+    return (((_a = Number === null || Number === void 0 ? void 0 : Number.isInteger) === null || _a === void 0 ? void 0 : _a.call(Number, num)) ||
+        (num < 0 ? Math.ceil(num) : Math.floor(num)) === num);
 }
 // ---END HELPERS---
 /**
@@ -318,3 +318,52 @@ function radixSort(arr, opts) {
     return order === 'ascending' ? array : __reverse(array);
 }
 exports.radixSort = radixSort;
+/**
+ * Sorts `arr` with heap-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
+ *
+ * **Time complexity (best, average and worst):** Quasi-linear (O(n log n)).
+ * @param arr The array to sort.
+ * @param opts Sorting options. See {@link SortOptions}.
+ * @returns A sorted copy of `arr`.
+ */
+function heapSort(arr, opts) {
+    if (opts === void 0) { opts = {}; }
+    __checkErrors(arr, opts);
+    var _a = opts.comparator, comparator = _a === void 0 ? __defAscending : _a, _b = opts.order, order = _b === void 0 ? 'ascending' : _b;
+    var n = arr.length;
+    // build heap
+    for (var i = Math.floor(n / 2) - 1; i >= 0; i--) {
+        __heapify(arr, i, n, comparator, order);
+    }
+    // extract elements from heap
+    for (var i = n - 1; i > 0; i--) {
+        __swap(arr, 0, i);
+        __heapify(arr, 0, i, comparator, order);
+    }
+    function compare(a, b, comparator, order) {
+        var cmp = comparator(a, b);
+        return order === 'ascending' ? cmp : -cmp;
+    }
+    function __swap(arr, i, j) {
+        var tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
+    function __heapify(arr, i, n, comparator, order) {
+        var largest = i;
+        var left = 2 * i + 1;
+        var right = 2 * i + 2;
+        if (left < n && compare(arr[left], arr[largest], comparator, order) > 0) {
+            largest = left;
+        }
+        if (right < n && compare(arr[right], arr[largest], comparator, order) > 0) {
+            largest = right;
+        }
+        if (largest !== i) {
+            __swap(arr, i, largest);
+            __heapify(arr, largest, n, comparator, order);
+        }
+    }
+    return arr;
+}
+exports.heapSort = heapSort;

@@ -24,9 +24,10 @@ export interface SortOptions<T = unknown> {
 }
 /**
  * Shape of the `opts` object exclusive to {@link radixSort}.
+ * The only thing it overrides is the comparator so it's forcibly `undefined`.
  */
 export interface RadixSortOptions extends SortOptions<number> {
-    comparator?: undefined;
+    comparator?: never;
 }
 /**
  * Sorts `arr` with bubble-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
@@ -102,3 +103,12 @@ export declare function bogoSort<T = unknown>(arr: T[], opts?: SortOptions<T>): 
  * @returns A sorted copy of `arr`.
  */
 export declare function radixSort(arr: number[], opts?: RadixSortOptions): number[];
+/**
+ * Sorts `arr` with heap-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
+ *
+ * **Time complexity (best, average and worst):** Quasi-linear (O(n log n)).
+ * @param arr The array to sort.
+ * @param opts Sorting options. See {@link SortOptions}.
+ * @returns A sorted copy of `arr`.
+ */
+export declare function heapSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];
