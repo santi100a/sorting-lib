@@ -2,9 +2,9 @@
 
 ## How to contribute
 
-You can [file an issue](https://github.com/santi100a/timing-lib/issues) 
-or a [pull request](https://github.com/santi100a/timing-lib/pulls). 
-You can also [start a discussion](https://github.com/santi100a/timing-lib/discussions).
+You can [file an issue](https://github.com/santi100a/sorting-lib/issues) 
+or a [pull request](https://github.com/santi100a/sorting-lib/pulls). 
+You can also [start a discussion](https://github.com/santi100a/sorting-lib/discussions).
 ## Types of accepted contributions and how to ask for them
 - Bug reports (issue/PR if you know how to fix it)
 - Feature requests (issue)

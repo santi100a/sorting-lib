@@ -1,85 +1,115 @@
-# Santi's Timing Library
-[![Build Status](https://github.com/santi100a/timing-lib/actions/workflows/main.yml/badge.svg)](https://github.com/santi100a/timing-lib/actions)
-[![npm homepage](https://img.shields.io/npm/v/@santi100/timing-lib)](https://npmjs.org/package/@santi100/timing-lib)
-[![GitHub stars](https://img.shields.io/github/stars/santi100a/timing-lib.svg)](https://github.com/santi100a/timing-lib)
-[![License](https://img.shields.io/github/license/santi100a/timing-lib.svg)](https://github.com/santi100a/timing-lib)
-[![Bundlephobia stats](https://img.shields.io/bundlephobia/min/@santi100/timing-lib)](https://bundlephobia.com/package/@santi100/timing-lib@latest)
+# Santi's Sorting Library
+[![Build Status](https://github.com/santi100a/sorting-lib/actions/workflows/test.yml/badge.svg)](https://github.com/santi100a/sorting-lib/actions)
+[![npm homepage](https://img.shields.io/npm/v/@santi100/sorting-lib)](https://npmjs.org/package/@santi100/sorting-lib)
+[![GitHub stars](https://img.shields.io/github/stars/santi100a/sorting-lib.svg)](https://github.com/santi100a/sorting-lib)
+[![License](https://img.shields.io/github/license/santi100a/sorting-lib.svg)](https://github.com/santi100a/sorting-lib)
+[![Bundlephobia stats](https://img.shields.io/bundlephobia/min/@santi100/sorting-lib)](https://bundlephobia.com/package/@santi100/sorting-lib@latest)
 
 - 🚀 Lightweight and fast[^](#disclaimers)
 - 👴 ES3-compliant[*](#disclaimers)
 - 💻 Portable between the browser and Node.js
 
 ## What's this?
-This is a library to keep track of time. It provides a class to create timer objects.
-It also provides a submodule called `promises`, with an asynchronous version of such a class, and 
-a promise-based time-out to wait. It can be useful for tracking the time it takes to complete certain operations in your application.
-## Contribute
+This is a library of sorting algorithms written in TypeScript. 
+Currently, the library includes the following algorithms:
 
-Wanna contribute? [File an issue](https://github.com/santi100a/timing-lib/issues) or [pull request](https://github.com/santi100a/timing-lib/pulls)! 
-Look at [the contribution instructions](CONTRIBUTING.md) and make sure you follow the [contribution Code of Conduct](CODE_OF_CONDUCT.md).
+- Bubble sort
+- Insertion sort
+- Selection sort
+- Merge sort
+- Quick sort
+- Bogo sort
+- Radix sort
+
+Thanks to [@fireship-io](https://github.com/fireship-io) for the idea, 
+taken from [his video about sorting algorithms](https://www.youtube.com/watch?v=RfXt_qHDEPw)
+and [its corresponding repo](https://github.com/fireship-io/sorting-algorithms).
 
 ## Installation
-- Via NPM: `npm install @santi100/timing-lib`
-- Via Yarn: `yarn add @santi100/timing-lib`
-- Via PNPM: `pnpm install @santi100/timing-lib`
+- Via NPM: `npm install @santi100/sorting-lib`
+- Via Yarn: `yarn add @santi100/sorting-lib`
+- Via PNPM: `pnpm install @santi100/sorting-lib`
+
+
 ## API
-### Main (`index.js`) module
-- `new Timer(label?: string): Timer;` Creates a new instance of `Timer`. 
-The label parameter was introduced in version 1.0.7.
-- `start(): Timer;` Starts the timer. Returns the `this` object for chaining.
-- `stop(): Timer;` Stops the timer. Returns the `this` object for chaining.
-- `getDifference(): number;` Returns the time elapsed between the start and end of the timer.
-#### Since 1.0.6 (see [Changelog](CHANGELOG.md))
-- `close(): Timer;` Closes the timer so it can no longer be used. Returns the `this` object for chaining.
-- `computeDifference(): Timer;` Computes the time elapsed between the start and end of the timer. Returns the `this` object for chaining.
-- `isClosed(): boolean;` Checks whether or not this timer is closed and can't be used anymore. Returns whether or not this timer is closed.
-- `isStarted(): boolean;` Checks whether or not this timer is started right now. Returns whether or not this timer is started.
-- `isStopped(): boolean;` Checks whether or not this timer is stopped right now. Returns whether or not this timer is stopped.
-#### Since 1.0.7
-- `registerStartCb(cb: TimerCallback<T>): Timer;`: Register the callback for the starting of the timer. Returns the `this` object for chaining.
-- `registerStopCb(cb: TimerCallback<T>): Timer;`: Register the callback for the stopping of the timer. Returns the `this` object for chaining.
-- `registerCloseCb(cb: TimerCallback<T>): Timer;`: Register the callback for the closure of the timer. Returns the `this` object for chaining.
-- `deleteStartCb(): Timer;`: Delete the callback for the starting of the timer. Returns the `this` object for chaining.
-- `deleteStopCb(): Timer;`: Delete the callback for the stopping of the timer. Returns the `this` object for chaining.
-- `deleteCloseCb(): Timer;`: Delete the callback for the closure of the timer. Returns the `this` object for chaining.
-- `getLabel(): string;`: Returns the timer's label. 
-- `reset(): Timer;`: Resets the starting time, ending time, and difference. Returns the `this` object for chaining.
-### Promises (`promises.js`) module
-- `async function delay(ms?: number): Promise<void>;` Creates a new `Promise` that resolves after `ms` milliseconds.
-- `new AsyncTimer(): AsyncTimer;` Creates a new instance of `AsyncTimer`.
-- `async start(): AsyncTimer;` Starts the timer. Returns a promise of the `this` object for chaining.
-- `async stop(): AsyncTimer;` Stops the timer. Returns a promise of the `this` object for chaining.
-- `async getDifference(): number;` Returns a promise of the time elapsed between the start and end of the timer.
-#### Since 1.0.6 (see [Changelog](CHANGELOG.md))
-- `async close(): AsyncTimer;` Closes the timer so it can no longer be used. Returns a promise of the `this` object for chaining.
-- `async computeDifference(): AsyncTimer;` Computes the time elapsed between the start and end of the timer. Returns a promise of the `this` object for chaining.
-- `async isClosed(): boolean;` Checks whether or not this timer is closed and can't be used anymore. Returns a promise of a boolean indicating whether or not this timer is closed.
-- `async isStarted(): boolean;` Checks whether or not this timer is started right now. Returns a promise of a boolean indicating whether or not this timer is started.
-- `async isStopped(): boolean;` Checks whether or not this timer is stopped right now. Returns a promise of a boolean indicating whether or not this timer is stopped.
+### Types
+- `type SortComparator<T = unknown> = (a: T, b: T) => number;` Comparator function for every sorting algorithm, 
+except for `radixSort`. It's fully compatible with `Array.prototype.sort`'s callback.
+- `type SortOrder = 'ascending' | 'descending';` Sorting order string. Must be either `ascending` or `descending`.
+- `interface SortOptions<T = unknown>;` Shape of the `opts` object passed to every sorting algorithm, except for `radixSort`.
+See `RadixSortOptions` for the options specific to it.
+  * `comparator?: SortComparator<T>;` Comparator function for every sorting algorithm, except for `radixSort`.
+It's fully compatible with `Array.prototype.sort`'s callback. See `SortComparator`.
+  * `order?: SortOrder;` Sorting order string. Must be either `ascending` or `descending`. See `SortOrder`.
+- `function bubbleSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];` 
+Sorts `arr` with bubble-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
+It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
+
+**Time complexity:** Quadratic ($O(n ^ 2)$).
+
+- `function insertionSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];` 
+Sorts `arr` with insertion-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
+It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
+
+**Time complexity (average and worst-case):** Quadratic $(O(n ^ 2)$).
+
+**Time complexity (best-case):** Linear ($O(n)$).
+- `function selectionSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];` 
+Sorts `arr` with selection-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
+It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
+
+**Time complexity (average and worst-case):** Quadratic ($O(n ^ 2)$).
+- `function mergeSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];` 
+Sorts `arr` with merge-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
+It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
+
+**Time complexity (average and worst-case):** Quasi-linear ($O(n * log(n))$).
+- `function quickSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];` 
+Sorts `arr` with quick-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
+It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
+
+**Time complexity (best and average):** Quasi-linear ($O(n log(n))$).
+
+**Time complexity (worst)**: Quadratic ($O(n ^ 2)$).
+- `function bogoSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];` 
+Sorts `arr` with bogo-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
+It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
+
+**Time complexity (average):** Linear-factorial ($O(n n!)$).
+
+**Worst-case time complexity:** Infinity ($O(∞)$).
+- `function radixSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];` 
+Sorts `arr` with radix-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
+It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
+
+**Time complexity (best, average and worst):** $O(n k)$, where $k$ is the number of digits or characters in the
+largest element.
 
 ## Usage
-```javascript
-const { Timer } = require('@santi100/timing-lib/cjs'); // Since 1.0.6; import '@santi100/timing-lib/cjs/index.js' if using version 1.0.5 or older. 
-const { delay } = require('@santi100/timing-lib/cjs/promises'); 
-// import { Timer } from '@santi100/timing-lib'; // For ESM
-// import { delay } from '@santi100/timing-lib/promises.js'; // For ESM
-const timer = new Timer(); 
-timer.start(); 
-// do something here 
-timer.stop(); 
-console.log(timer.getDifference()); // prints the elapsed time in milliseconds
+```typescript
+import { mergeSort } from '@santi100/sorting-lib'; // ESM
+const { mergeSort } = require('@santi100/sorting-lib'); // CJS
+const sorted = mergeSort([4, 2, 5, 1, 3]); // sorted = [1, 2, 3, 4, 5]
+const descendingSorted = mergeSort([4, 2, 5, 1, 3], { order: 'descending' }); // descendingSorted = [5, 4, 3, 2, 1]
+const objSorted = mergeSort([
+    {
+        age: 23
+    },
+    {
+        age: 12
+    },
+    {
+        age: 30
+    }
+], { comparator: (a, b) => a.age - b.age }) // returns [ { age: 12 }, { age: 23 }, { age: 30 }]
 
-// Example usage of delay
-(async () => {
-    console.log('Half a second later...');
-    await delay(500); // Waits half a second (more or less)
-    console.log("Sorry I'm late!");
-})()
 ```
+## Contribute
+
+Wanna contribute? [File an issue](issues) or [pull request](pulls)! 
+Look at [the contribution instructions](CONTRIBUTING.md) and make sure you follow the [contribution Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Disclaimers
-**Hasn't been tested in an actual ES3 environment. Feel free to open an issue or pull request if you find any non-ES3 thing. See "Contribute" for instructions on how to do so. Of course, some parts, like ESM support and setTimeout for the promise-based module, are not ES3 compliant, but I try my best so the main codebase is.*
+**Hasn't been tested in an actual ES3 environment. Feel free to open an issue or pull request if you find any non-ES3 thing. See "Contribute" for instructions on how to do so.*
 
 *^The source code is just a few kilobytes in size.*
-
-**Tests show `Timer` and  `AsyncTimer` don't work accurately sometimes. Open a pull request so we can fix it together.**

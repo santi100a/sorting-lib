@@ -33,5 +33,14 @@
 			"\t.toBe($0);"
 		],
 		"description": "Expect to be"
+	},
+	"describe": {
+		"scope": "javascript,typescript",
+		"prefix": "describe",
+		"body": [
+			"describe('$1', () => {",
+			"\t$0",
+			"});"
+		]
 	}
 }

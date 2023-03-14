@@ -20,7 +20,7 @@ I am committed to addressing security vulnerabilities in a responsible manner, a
 I will evaluate the severity of reported vulnerabilities. The severity of the vulnerability will determine the priority for addressing it.
 
 ## Patching
-I will try my best to provide patches for all vulnerabilities that are confirmed and accepted. We will make reasonable efforts to provide patches in a timely manner, and will prioritize high-severity vulnerabilities. We may provide workarounds or mitigation advice in cases where a patch is not immediately available.
+I will try my best to provide patches for all vulnerabilities that are confirmed and accepted. I will make reasonable efforts to provide patches in a timely manner, and will prioritize high-severity vulnerabilities. I may provide workarounds or mitigation advice in cases where a patch is not immediately available.
 
 ## Public Disclosure
 I will coordinate with you to determine an appropriate timeline for public disclosure of the vulnerability, taking into account the severity of the vulnerability, the availability of patches, and any other relevant factors. I will make a best effort to release a patch for the vulnerability before publicly disclosing it, and will coordinate with other affected parties if necessary.

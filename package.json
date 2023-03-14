@@ -2,6 +2,8 @@
   "name": "@santi100/sorting-lib",
   "version": "0.0.1",
   "main": "cjs/index.js",
+  "module": "index.js",
+  "typings": "cjs/index.d.ts",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^29.4.0",
@@ -19,17 +21,15 @@
     "require": "./cjs/index.js",
     "types": "./cjs/index.d.ts"
   },
-  "./promises": {
-    "import": "./promises.js",
-    "require": "./cjs/promises.js",
-    "types": "./cjs/promises.d.ts"
+  "./cjs": {
+    "import": "./cjs/index.js",
+    "require": "./cjs/index.js",
+    "types": "./cjs/index.d.ts"
   }
 },
-"module": "index.js",
   "repository": {
     "url": "https://github.com/santi100a/sorting-lib"
   },
-  "typings": "cjs/index.d.ts",
   "scripts": {
     "dev": "tsc -w",
     "build": "tsc",

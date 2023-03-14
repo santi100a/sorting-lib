@@ -5,8 +5,12 @@ on:
     branches: 
       - main 
     paths:
-      - src/*.*
-      - .github/workflows/*.*
+      - src/**/*.ts
+      - tests/**/*.test.js
+      - .github/workflows/test.yml
+      - .github/workflows/release.yml
+      - .github/workflows/publish.yml
+
 
 jobs:
   test:
@@ -32,4 +36,4 @@ jobs:
     secrets: 
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-      GPR_AUTH_TOKEN: ${{ secrets.GPR_AUTH_TOKEN }}
+      GPR_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
