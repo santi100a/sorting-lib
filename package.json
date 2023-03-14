@@ -1,6 +1,6 @@
 {
   "name": "@santi100/sorting-lib",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "cjs/index.js",
   "module": "index.js",
   "typings": "cjs/index.d.ts",
