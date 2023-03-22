@@ -304,7 +304,6 @@ describe('Sorting algorithms', () => {
 			);
 		});
 	});
-	//
 	describe('quickSort', () => {
 		describe('error handling', () => {
 			test('throws TypeError if "arr" is not an array', () => {
