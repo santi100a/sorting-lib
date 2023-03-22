@@ -32,5 +32,7 @@ jobs:
         run: cp main/tests/*.* tests/ 
       - name: Install dependencies
         run: yarn
+      - name: Build code
+        run: yarn build
       - name: Run main test suites
         run: yarn test
