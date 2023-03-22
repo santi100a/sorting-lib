@@ -1,14 +1,7 @@
 name: Pull Request check
 
 on:
-  pull_request:
-    types:
-      - edited
-      - opened
-    branches: 
-      - main
-    paths:
-      - src/**/*.*
+  - pull_request
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -32,5 +25,7 @@ jobs:
         run: cp main/tests/*.* tests/ 
       - name: Install dependencies
         run: yarn
+      - name: Build code
+        run: yarn build
       - name: Run main test suites
         run: yarn test
