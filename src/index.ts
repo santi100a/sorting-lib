@@ -91,7 +91,7 @@ function __isInteger(num: number) {
  * @param arr The array to sort.
  * @param opts Sorting options. See {@link SortOptions}.
  * @returns A sorted copy of `arr`.
- */
+ */ 
 export function bubbleSort<T = unknown>(arr: T[], opts: SortOptions<T> = {}) {
 	__checkErrors<T>(arr, opts);
 	const array = [...arr];
