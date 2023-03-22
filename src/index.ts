@@ -93,7 +93,7 @@ function __isInteger(num: number) {
  * @returns A sorted copy of `arr`.
  */ 
 export function bubbleSort<T = unknown>(arr: T[], opts: SortOptions<T> = {}) {
-	__checkErrors<T>(arr, opts);
+//	__checkErrors<T>(arr, opts);
 	const array = [...arr];
 	const {
 		order = 'ascending',

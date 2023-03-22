@@ -68,7 +68,7 @@ function __isInteger(num) {
  */
 function bubbleSort(arr, opts) {
     if (opts === void 0) { opts = {}; }
-    __checkErrors(arr, opts);
+    //	__checkErrors<T>(arr, opts);
     var array = __spreadArray([], arr, true);
     var _a = opts.order, order = _a === void 0 ? 'ascending' : _a, _b = opts.comparator, comparator = _b === void 0 ? order === 'ascending' ? __defAscending : __defDescending : _b;
     for (var i = 0; i < array.length; i++) {
