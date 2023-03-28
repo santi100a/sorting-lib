@@ -54,57 +54,57 @@ exclusive to `countingSort`.
 Sorts `arr` with bubble-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
 It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
 
-**Time complexity:** Quadratic ($ O(n ^ 2) $).
+**Time complexity:** Quadratic ($O(n ^ 2)$).
 
 - `function insertionSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];` 
 Sorts `arr` with insertion-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
 It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
 
-**Time complexity (average and worst-case):** Quadratic ($ O(n ^ 2) $).
+**Time complexity (average and worst-case):** Quadratic ($O(n ^ 2)$).
 
-**Time complexity (best-case):** Linear ($ O(n) $).
+**Time complexity (best-case):** Linear ($O(n)$).
 - `function selectionSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];` 
 Sorts `arr` with selection-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
 It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
 
-**Time complexity (average and worst-case):** Quadratic ($ O(n ^ 2) $).
+**Time complexity (average and worst-case):** Quadratic ($O(n ^ 2)$).
 - `function mergeSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];` 
 Sorts `arr` with merge-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
 It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
 
-**Time complexity (average and worst-case):** Quasi-linear ($ O(n \log{n}) $).
+**Time complexity (average and worst-case):** Quasi-linear ($O(n \log{n})$).
 - `function quickSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];` 
 Sorts `arr` with quick-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
 It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
 
-**Time complexity (best and average):** Quasi-linear ($ O(n \log{n}) $).
+**Time complexity (best and average):** Quasi-linear ($O(n \log{n})$).
 
 **Time complexity (worst)**: Quadratic ($ O(n ^ 2) $).
 - `function bogoSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];` 
 Sorts `arr` with bogo-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
 It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
 
-**Time complexity (average):** Linear-factorial ($ O((n!)(n)) $).
+**Time complexity (average):** Linear-factorial ($O((n!)(n))$).
 
-**Worst-case time complexity:** Infinity ($ O(∞) $).
+**Worst-case time complexity:** Infinity ($O(∞)$).
 - `function radixSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];` 
 Sorts `arr` with radix-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
 It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
 
-**Time complexity (best, average and worst):** $ O(n k) $, where $ k $ is the number of digits or characters in the
+**Time complexity (best, average and worst):** $O(n k)$, where $k$ is the number of digits or characters in the
 largest element.
 - `function heapSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];` Sorts `arr` with heap-sort and returns a new sorted array (i.e.: doesn't mutate `arr`). 
 It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
 
-**Time complexity (best, average and worst):** Quasi-linear ($ O(n \log {n}) $).
+**Time complexity (best, average and worst):** Quasi-linear ($O(n \log {n})$).
 - `function shellSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];`: Sorts `arr` with shell-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
 It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
 
-**Time complexity:** Depends on the gap sequence used. Best known is $ O(n log^2 n) $.
+**Time complexity:** Depends on the gap sequence used. Best known is $O(n log^2 n)$.
 - `function countingSort(arr: number[], opts?: CountingSortOptions): T[];`: Sorts `arr` with counting-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
 It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
 
-**Time complexity (best, average and worse):** O(n + k), where k is the range of input (maximum 
+**Time complexity (best, average and worse):** $O(n + k)$, where $k$ is the range of input (maximum 
 element - minimum element + 1).
 
 ## Usage
