@@ -21,6 +21,8 @@ Currently, the library includes the following algorithms:
 - Bogo sort
 - Radix sort
 - Heap sort
+- Counting sort
+- Shell sort
 
 Thanks to [@fireship-io](https://github.com/fireship-io) for the idea, 
 taken from [his video about sorting algorithms](https://www.youtube.com/watch?v=RfXt_qHDEPw)
