@@ -4,8 +4,7 @@
         "noImplicitAny": true,
         "outDir": "cjs/",
         "declaration": true,
-        "target": "es3",
-        "ignoreDeprecations": "5.0"
+        "target": "es3"
     },
     "include": ["src/**/*.ts"],
     "exclude": ["node_modules"]

@@ -16,6 +16,8 @@ export interface SortOptions<T = unknown> {
 	/**
 	 * Comparator function for every sorting algorithm, except for {@link radixSort}.
 	 * It's fully compatible with {@link Array.prototype.sort}'s callback. See {@link SortComparator}.
+	 *
+	 * **Keep in mind this option overrides the `order` option.**
 	 */
 	comparator?: SortComparator<T>;
 	/**
@@ -25,11 +27,18 @@ export interface SortOptions<T = unknown> {
 }
 /**
  * Shape of the `opts` object exclusive to {@link radixSort}.
- * The only thing it overrides is the comparator so it's forcibly `undefined`.
  */
-export interface RadixSortOptions extends SortOptions<number> {
-	comparator?: never;
+export interface RadixSortOptions {
+	/**
+	 * Sorting order string. Must be either `ascending` or `descending`. See {@link SortOrder}.
+	 */
+	order?: SortOrder;
 }
+/**
+ * Shape of the `opts` object exclusive to {@link countingSort}.
+ * @since 0.0.3
+ */
+export type CountingSortOptions = RadixSortOptions;
 // ---END TYPES---
 // ---START HELPERS---
 function __defAscending(a: any, b: any) {
@@ -94,7 +103,7 @@ function __isInteger(num: number) {
  */
 export function bubbleSort<T = unknown>(arr: T[], opts: SortOptions<T> = {}) {
 	__checkErrors<T>(arr, opts);
-	const array = [...arr];
+	const array = arr.slice();
 	const {
 		order = 'ascending',
 		comparator = order === 'ascending' ? __defAscending : __defDescending,
@@ -341,8 +350,8 @@ export function bogoSort<T = unknown>(arr: T[], opts: SortOptions<T> = {}) {
 /**
  * Sorts `arr` with radix-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
  *
- * **Time complexity (best, average and worst):** O(n * k), where `k` is the number of digits or characters in the
- * largest element.
+ * **Time complexity (best, average and worst):** O(n * k), where `k` is the number of digits or characters
+ * in the largest element.
  * @param arr The array to sort.
  * @param opts Sorting options. See {@link SortOptions}.
  * @returns A sorted copy of `arr`.
@@ -445,4 +454,82 @@ export function heapSort<T = unknown>(arr: T[], opts: SortOptions<T> = {}) {
 		}
 	}
 	return arr;
+}
+/**
+ * Sorts `arr` with shell-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
+ *
+ * **Time complexity:** Depends on the gap sequence used. Best known is O(n log^2 n).
+ * @param arr The array to sort.
+ * @param opts Sorting options. See {@link SortOptions}.
+ * @returns A sorted copy of `arr`.
+ */
+export function shellSort<T = unknown>(arr: T[], opts: SortOptions<T> = {}) {
+	__checkErrors<T>(arr, opts);
+	const array = arr.slice();
+	const {
+		order = 'ascending',
+		comparator = order === 'ascending' ? __defAscending : __defDescending,
+	} = opts;
+	const len = array.length;
+	let gap = Math.floor(len / 2);
+
+	while (gap > 0) {
+		for (let i = gap; i < len; i++) {
+			const temp = array[i];
+			let j = i;
+
+			while (j >= gap && comparator(array[j - gap], temp) > 0) {
+				array[j] = array[j - gap];
+				j -= gap;
+			}
+			array[j] = temp;
+		}
+		gap = Math.floor(gap / 2);
+	}
+	return array.slice();
+}
+/**
+ * Sorts `arr` with counting-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
+ *
+ * **Time complexity (best, average and worse):** O(n + k), where k is the range of 
+ * input (maximum element - minimum element + 1).
+ * @param arr The array to sort.
+ * @param opts Sorting options. See {@link SortOptions}.
+ * @returns A sorted copy of `arr`.
+ */
+export function countingSort(arr: number[], opts: CountingSortOptions = {}) {
+    __checkErrors<number>(arr, opts);
+	for (const item of arr) {
+		if (typeof item !== 'number')
+			throw new TypeError(
+				`"arr" must be an Array of numbers. Item #${arr?.indexOf?.(
+					item
+				)} of "arr" is "${item}" of type "${typeof item}".`
+			);
+	}
+    const array = [...arr];
+    const { order = 'ascending' } = opts;
+    const max = Math.max(...array);
+    const countingArray = Array(max + 1).fill(0);
+
+    // Step 1: populate the counting array
+     
+	for (const element of array) countingArray[element]++;
+
+    // Step 2: modify the counting array to store the actual position of each element in the sorted array
+    for (let i = 1; i <= max; i++) {
+        countingArray[i] += countingArray[i - 1];
+    }
+
+    // Step 3: Traverse the input array and place the elements in the sorted array
+    const sortedArray = Array(array.length);
+    for (let i = array.length - 1; i >= 0; i--) {
+        const element = array[i];
+        const position = countingArray[element] - 1;
+        sortedArray[position] = element;
+        countingArray[element]--;
+    }
+
+    // Step 4: Return the sorted array in the specified order
+    return order === 'ascending' ? sortedArray : sortedArray.slice().reverse();
 }

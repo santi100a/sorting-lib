@@ -14,6 +14,8 @@ describe('Sorting algorithms', () => {
 		selectionSort,
 		radixSort,
 		heapSort,
+		shellSort,
+		countingSort
 	} = require('../cjs');
 	const unsortedArray = [4, 1, 2, 3];
 	const sortedArray = [1, 2, 3, 4];
@@ -88,7 +90,7 @@ describe('Sorting algorithms', () => {
 			).toEqual([...sortedObjArrayByAge].reverse());
 		});
 	});
-	describe('insertionSort', () => { 
+	describe('insertionSort', () => {
 		describe('error handling', () => {
 			test('throws TypeError if "arr" is not an array', () => {
 				expect(() => {
@@ -370,13 +372,13 @@ describe('Sorting algorithms', () => {
 				if (a.name > b.name) return -1;
 				return 0;
 			};
-			expect(
-				quickSort([...unsortedArray], { comparator })
-			).toEqual(sortedArray);
+			expect(quickSort([...unsortedArray], { comparator })).toEqual(
+				sortedArray
+			);
 		});
 	});
 	describe('bogoSort', () => {
-        describe('error handling', () => {
+		describe('error handling', () => {
 			test('throws TypeError if "arr" is not an array', () => {
 				expect(() => {
 					bogoSort('not an array', {});
@@ -418,24 +420,7 @@ describe('Sorting algorithms', () => {
 			);
 		});
 	});
-	describe('error handling', () => {
-		test('throws an error if array is not an array', () => {
-		  expect(() => radixSort('not an array')).toThrow(TypeError);
-		});
-	  
-		test('throws an error if options is not an object', () => {
-		  expect(() => radixSort([1, 2, 3], 'not an object')).toThrow(TypeError);
-		});
-	  
-		test('throws an error if order is not "ascending" or "descending"', () => {
-		  expect(() => radixSort([1, 2, 3], { order: 'not an order' })).toThrow(TypeError);
-		});
-	  
-		test('throws an error if array contains non-integer values', () => {
-		  expect(() => radixSort([1, 2, 3, 'not a number'])).toThrow(TypeError);
-		});
-	  });
-	  describe('heapSort', () => {
+	describe('heapSort', () => {
 		describe('error handling', () => {
 			test('throws TypeError if "arr" is not an array', () => {
 				expect(() => {
@@ -460,52 +445,194 @@ describe('Sorting algorithms', () => {
 			{ name: 'Bob', age: 25 },
 			{ name: 'Charlie', age: 35 },
 		];
+		test('sorts an array of numbers in ascending order', () => {
+			const arr = [5, 2, 8, 1, 4];
+			const sorted = heapSort(arr);
+			expect(sorted).toEqual([1, 2, 4, 5, 8]);
+		});
+
+		test('sorts an array of numbers in descending order', () => {
+			const arr = [5, 2, 8, 1, 4];
+			const sorted = heapSort(arr, { order: 'descending' });
+			expect(sorted).toEqual([8, 5, 4, 2, 1]);
+		});
+
+		test('sorts an array of strings in ascending order', () => {
+			const arr = ['banana', 'apple', 'orange'];
+			const sorted = heapSort(arr);
+			expect(sorted).toEqual(['apple', 'banana', 'orange']);
+		});
+
+		test('sorts an array of strings in descending order', () => {
+			const arr = ['banana', 'apple', 'orange'];
+			const sorted = heapSort(arr, { order: 'descending' });
+			expect(sorted).toEqual(['orange', 'banana', 'apple']);
+		});
+
+		test('sorts an array of objects in ascending order by age', () => {
+			const arr = people.slice();
+			const sorted = heapSort(arr, {
+				comparator: (a, b) => a.age - b.age,
+			});
+			expect(sorted).toEqual([
+				{ name: 'Bob', age: 25 },
+				{ name: 'Alice', age: 30 },
+				{ name: 'Charlie', age: 35 },
+			]);
+		});
+
+		test('sorts an array of objects in descending order by age', () => {
+			const arr = people.slice();
+			const sorted = heapSort(arr, {
+				comparator: (a, b) => b.age - a.age,
+			});
+			expect(sorted).toEqual([
+				{ name: 'Charlie', age: 35 },
+				{ name: 'Alice', age: 30 },
+				{ name: 'Bob', age: 25 },
+			]);
+		});
+	});
+	describe('shellSort', () => {
+		describe('error handling', () => {
+			test('throws TypeError if "arr" is not an array', () => {
+				expect(() => {
+					shellSort('not an array', {});
+				}).toThrow(TypeError);
+			});
+
+			test('throws TypeError if "opts" is not an object', () => {
+				expect(() => {
+					shellSort([], 'not an object');
+				}).toThrow(TypeError);
+			});
+
+			test('throws TypeError if "opts.order" is not valid', () => {
+				expect(() => {
+					shellSort([], { order: 'invalid' });
+				}).toThrow(TypeError);
+			});
+		});
+		const people = [
+			{ name: 'Alice', age: 30 },
+			{ name: 'Bob', age: 25 },
+			{ name: 'Charlie', age: 35 },
+		];
+		test('sorts an array of numbers in ascending order', () => {
+			const arr = [5, 2, 8, 1, 4];
+			const sorted = shellSort(arr);
+			expect(sorted).toEqual([1, 2, 4, 5, 8]);
+		});
+
+		test('sorts an array of numbers in descending order', () => {
+			const arr = [5, 2, 8, 1, 4];
+			const sorted = shellSort(arr, { order: 'descending' });
+			expect(sorted).toEqual([8, 5, 4, 2, 1]);
+		});
+
+		test('sorts an array of strings in ascending order', () => {
+			const arr = ['banana', 'apple', 'orange'];
+			const sorted = shellSort(arr);
+			expect(sorted).toEqual(['apple', 'banana', 'orange']);
+		});
+
+		test('sorts an array of strings in descending order', () => {
+			const arr = ['banana', 'apple', 'orange'];
+			const sorted = shellSort(arr, { order: 'descending' });
+			expect(sorted).toEqual(['orange', 'banana', 'apple']);
+		});
+
+		test('sorts an array of objects in ascending order by age', () => {
+			const arr = people.slice();
+			const sorted = shellSort(arr, {
+				comparator: (a, b) => a.age - b.age,
+			});
+			expect(sorted).toEqual([
+				{ name: 'Bob', age: 25 },
+				{ name: 'Alice', age: 30 },
+				{ name: 'Charlie', age: 35 },
+			]);
+		});
+
+		test('sorts an array of objects in descending order by age', () => {
+			const arr = people.slice();
+			const sorted = shellSort(arr, {
+				comparator: (a, b) => b.age - a.age,
+			});
+			expect(sorted).toEqual([
+				{ name: 'Charlie', age: 35 },
+				{ name: 'Alice', age: 30 },
+				{ name: 'Bob', age: 25 },
+			]);
+		});
+	});
+	describe('radixSort', () => {
+		describe('error handling', () => {
+			test('throws an error if array is not an array', () => {
+				expect(() => radixSort('not an array')).toThrow(TypeError);
+			});
+
+			test('throws an error if options is not an object', () => {
+				expect(() => radixSort([1, 2, 3], 'not an object')).toThrow(TypeError);
+			});
+
+			test('throws an error if order is not "ascending" or "descending"', () => {
+				expect(() => radixSort([1, 2, 3], { order: 'not an order' })).toThrow(
+					TypeError
+				);
+			});
+
+			test('throws an error if array contains non-integer values', () => {
+				expect(() => radixSort([1, 2, 3, 'not a number'])).toThrow(TypeError);
+			});
+		});
+		test('sorts an array of numbers in ascending order', () => {
+			const arr = [5, 2, 8, 1, 4];
+			const sorted = radixSort(arr);
+			expect(sorted).toEqual([1, 2, 4, 5, 8]);
+		});
+
+		test('sorts an array of numbers in descending order', () => {
+			const arr = [5, 2, 8, 1, 4];
+			const sorted = radixSort(arr, { order: 'descending' });
+			expect(sorted).toEqual([8, 5, 4, 2, 1]);
+		});
+	});
+	describe('countingSort', () => {
+		describe('error handling', () => {
+			test('throws TypeError if "arr" is not an array', () => {
+				expect(() => {
+					countingSort('not an array', {});
+				}).toThrow(TypeError);
+			});
+	
+			test('throws TypeError if "opts" is not an object', () => {
+				expect(() => {
+					countingSort([], 'not an object');
+				}).toThrow(TypeError);
+			});
+	
+			test('throws TypeError if "opts.order" is not valid', () => {
+				expect(() => {
+					countingSort([], { order: 'invalid' });
+				}).toThrow(TypeError);
+			});
+			test('throws TypeError if "arr" contains non-numeric values', () => {
+				expect(() => {
+					countingSort([6, 7, 'hello']);
+				}).toThrow(TypeError);
+			});
+		});
 		it('sorts an array of numbers in ascending order', () => {
 		  const arr = [5, 2, 8, 1, 4];
-		  const sorted = heapSort(arr);
+		  const sorted = countingSort(arr);
 		  expect(sorted).toEqual([1, 2, 4, 5, 8]);
 		});
 	  
 		it('sorts an array of numbers in descending order', () => {
 		  const arr = [5, 2, 8, 1, 4];
-		  const sorted = heapSort(arr, { order: 'descending' });
+		  const sorted = countingSort(arr, { order: 'descending' });
 		  expect(sorted).toEqual([8, 5, 4, 2, 1]);
-		});
-	  
-		it('sorts an array of strings in ascending order', () => {
-		  const arr = ['banana', 'apple', 'orange'];
-		  const sorted = heapSort(arr);
-		  expect(sorted).toEqual(['apple', 'banana', 'orange']);
-		});
-	  
-		it('sorts an array of strings in descending order', () => {
-		  const arr = ['banana', 'apple', 'orange'];
-		  const sorted = heapSort(arr, { order: 'descending' });
-		  expect(sorted).toEqual(['orange', 'banana', 'apple']);
-		});
-	  
-		it('sorts an array of objects in ascending order by age', () => {
-		  const arr = people.slice();
-		  const sorted = heapSort(arr, {
-			comparator: (a, b) => a.age - b.age,
-		  });
-		  expect(sorted).toEqual([
-			{ name: 'Bob', age: 25 },
-			{ name: 'Alice', age: 30 },
-			{ name: 'Charlie', age: 35 },
-		  ]);
-		});
-	  
-		it('sorts an array of objects in descending order by age', () => {
-		  const arr = people.slice();
-		  const sorted = heapSort(arr, {
-			comparator: (a, b) => b.age - a.age,
-		  });
-		  expect(sorted).toEqual([
-			{ name: 'Charlie', age: 35 },
-			{ name: 'Alice', age: 30 },
-			{ name: 'Bob', age: 25 },
-		  ]);
 		});
 	  });
 });

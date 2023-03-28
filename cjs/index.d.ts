@@ -15,6 +15,8 @@ export interface SortOptions<T = unknown> {
     /**
      * Comparator function for every sorting algorithm, except for {@link radixSort}.
      * It's fully compatible with {@link Array.prototype.sort}'s callback. See {@link SortComparator}.
+     *
+     * **Keep in mind this option overrides the `order` option.**
      */
     comparator?: SortComparator<T>;
     /**
@@ -24,11 +26,18 @@ export interface SortOptions<T = unknown> {
 }
 /**
  * Shape of the `opts` object exclusive to {@link radixSort}.
- * The only thing it overrides is the comparator so it's forcibly `undefined`.
  */
-export interface RadixSortOptions extends SortOptions<number> {
-    comparator?: never;
+export interface RadixSortOptions {
+    /**
+     * Sorting order string. Must be either `ascending` or `descending`. See {@link SortOrder}.
+     */
+    order?: SortOrder;
 }
+/**
+ * Shape of the `opts` object exclusive to {@link countingSort}.
+ * @since 0.0.3
+ */
+export type CountingSortOptions = RadixSortOptions;
 /**
  * Sorts `arr` with bubble-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
  *
@@ -96,8 +105,8 @@ export declare function bogoSort<T = unknown>(arr: T[], opts?: SortOptions<T>): 
 /**
  * Sorts `arr` with radix-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
  *
- * **Time complexity (best, average and worst):** O(n * k), where `k` is the number of digits or characters in the
- * largest element.
+ * **Time complexity (best, average and worst):** O(n * k), where `k` is the number of digits or characters
+ * in the largest element.
  * @param arr The array to sort.
  * @param opts Sorting options. See {@link SortOptions}.
  * @returns A sorted copy of `arr`.
@@ -112,3 +121,22 @@ export declare function radixSort(arr: number[], opts?: RadixSortOptions): numbe
  * @returns A sorted copy of `arr`.
  */
 export declare function heapSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];
+/**
+ * Sorts `arr` with shell-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
+ *
+ * **Time complexity:** Depends on the gap sequence used. Best known is O(n log^2 n).
+ * @param arr The array to sort.
+ * @param opts Sorting options. See {@link SortOptions}.
+ * @returns A sorted copy of `arr`.
+ */
+export declare function shellSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];
+/**
+ * Sorts `arr` with counting-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
+ *
+ * **Time complexity (best, average and worse):** O(n + k), where k is the range of
+ * input (maximum element - minimum element + 1).
+ * @param arr The array to sort.
+ * @param opts Sorting options. See {@link SortOptions}.
+ * @returns A sorted copy of `arr`.
+ */
+export declare function countingSort(arr: number[], opts?: CountingSortOptions): any[];
