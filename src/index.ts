@@ -454,7 +454,7 @@ export function heapSort<T = unknown>(arr: T[], opts: SortOptions<T> = {}) {
 		}
 	}
 	return arr;
-}
+} 
 /**
  * Sorts `arr` with shell-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
  *
