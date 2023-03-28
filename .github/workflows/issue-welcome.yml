@@ -1,0 +1,24 @@
+name: Welcome message for issues
+on:
+  issues:
+      types:
+      - opened
+permissions:
+  issues: write
+jobs:
+  welcome-author:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say hi
+        uses: jungwinter/comment@v1
+        with:
+          type: create
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue_number: ${{ github.event.issue.number }}
+          body: |
+            Hi, ${{ github.event.pull_request.user.login }}! Welcome to ${{ github.repository }} PRs! 
+            Make sure to comply with the [Code of Conduct][coc], [security policy][security] and [contribution guidelines][contributing] before contributing to this repo.
+
+            [coc]: https://github.com/${{ github.repository }}/blob/main/CODE_OF_CONDUCT.md
+            [security]: https://github.com/${{ github.repository }}/blob/main/SECURITY.md
+            [contributing]: https://github.com/${{ github.repository }}/blob/main/CONTRIBUTING.md
