@@ -9,7 +9,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 exports.__esModule = true;
-exports.heapSort = exports.radixSort = exports.bogoSort = exports.quickSort = exports.mergeSort = exports.selectionSort = exports.insertionSort = exports.bubbleSort = void 0;
+exports.countingSort = exports.shellSort = exports.heapSort = exports.radixSort = exports.bogoSort = exports.quickSort = exports.mergeSort = exports.selectionSort = exports.insertionSort = exports.bubbleSort = void 0;
 // ---END TYPES---
 // ---START HELPERS---
 function __defAscending(a, b) {
@@ -69,7 +69,7 @@ function __isInteger(num) {
 function bubbleSort(arr, opts) {
     if (opts === void 0) { opts = {}; }
     __checkErrors(arr, opts);
-    var array = __spreadArray([], arr, true);
+    var array = arr.slice();
     var _a = opts.order, order = _a === void 0 ? 'ascending' : _a, _b = opts.comparator, comparator = _b === void 0 ? order === 'ascending' ? __defAscending : __defDescending : _b;
     for (var i = 0; i < array.length; i++) {
         for (var j = 0; j < array.length - i - 1; j++) {
@@ -277,8 +277,8 @@ exports.bogoSort = bogoSort;
 /**
  * Sorts `arr` with radix-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
  *
- * **Time complexity (best, average and worst):** O(n * k), where `k` is the number of digits or characters in the
- * largest element.
+ * **Time complexity (best, average and worst):** O(n * k), where `k` is the number of digits or characters
+ * in the largest element.
  * @param arr The array to sort.
  * @param opts Sorting options. See {@link SortOptions}.
  * @returns A sorted copy of `arr`.
@@ -367,3 +367,76 @@ function heapSort(arr, opts) {
     return arr;
 }
 exports.heapSort = heapSort;
+/**
+ * Sorts `arr` with shell-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
+ *
+ * **Time complexity:** Depends on the gap sequence used. Best known is O(n log^2 n).
+ * @param arr The array to sort.
+ * @param opts Sorting options. See {@link SortOptions}.
+ * @returns A sorted copy of `arr`.
+ */
+function shellSort(arr, opts) {
+    if (opts === void 0) { opts = {}; }
+    __checkErrors(arr, opts);
+    var array = arr.slice();
+    var _a = opts.order, order = _a === void 0 ? 'ascending' : _a, _b = opts.comparator, comparator = _b === void 0 ? order === 'ascending' ? __defAscending : __defDescending : _b;
+    var len = array.length;
+    var gap = Math.floor(len / 2);
+    while (gap > 0) {
+        for (var i = gap; i < len; i++) {
+            var temp = array[i];
+            var j = i;
+            while (j >= gap && comparator(array[j - gap], temp) > 0) {
+                array[j] = array[j - gap];
+                j -= gap;
+            }
+            array[j] = temp;
+        }
+        gap = Math.floor(gap / 2);
+    }
+    return array.slice();
+}
+exports.shellSort = shellSort;
+/**
+ * Sorts `arr` with counting-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
+ *
+ * **Time complexity (best, average and worse):** O(n + k), where k is the range of
+ * input (maximum element - minimum element + 1).
+ * @param arr The array to sort.
+ * @param opts Sorting options. See {@link SortOptions}.
+ * @returns A sorted copy of `arr`.
+ */
+function countingSort(arr, opts) {
+    var _a;
+    if (opts === void 0) { opts = {}; }
+    __checkErrors(arr, opts);
+    for (var _i = 0, arr_2 = arr; _i < arr_2.length; _i++) {
+        var item = arr_2[_i];
+        if (typeof item !== 'number')
+            throw new TypeError("\"arr\" must be an Array of numbers. Item #".concat((_a = arr === null || arr === void 0 ? void 0 : arr.indexOf) === null || _a === void 0 ? void 0 : _a.call(arr, item), " of \"arr\" is \"").concat(item, "\" of type \"").concat(typeof item, "\"."));
+    }
+    var array = __spreadArray([], arr, true);
+    var _b = opts.order, order = _b === void 0 ? 'ascending' : _b;
+    var max = Math.max.apply(Math, array);
+    var countingArray = Array(max + 1).fill(0);
+    // Step 1: populate the counting array
+    for (var _c = 0, array_1 = array; _c < array_1.length; _c++) {
+        var element = array_1[_c];
+        countingArray[element]++;
+    }
+    // Step 2: modify the counting array to store the actual position of each element in the sorted array
+    for (var i = 1; i <= max; i++) {
+        countingArray[i] += countingArray[i - 1];
+    }
+    // Step 3: Traverse the input array and place the elements in the sorted array
+    var sortedArray = Array(array.length);
+    for (var i = array.length - 1; i >= 0; i--) {
+        var element = array[i];
+        var position = countingArray[element] - 1;
+        sortedArray[position] = element;
+        countingArray[element]--;
+    }
+    // Step 4: Return the sorted array in the specified order
+    return order === 'ascending' ? sortedArray : sortedArray.slice().reverse();
+}
+exports.countingSort = countingSort;

@@ -42,9 +42,12 @@ See `RadixSortOptions` for the options specific to it.
   * `comparator?: SortComparator<T>;` Comparator function for every sorting algorithm, except for `radixSort`.
 It's fully compatible with `Array.prototype.sort`'s callback. See `SortComparator`.
   * `order?: SortOrder;` Sorting order string. Must be either `ascending` or `descending`. See `SortOrder`.
-- `interface RadixSortOptions extends SortOptions<number>;` Shape of the `opts` object exclusive to `radixSort`.
-The only thing it overrides is the comparator so it's forcibly `undefined`.
-  * `comparator?: never;` *I think this one is **very** self-explanatory...*
+- `interface RadixSortOptions;` Shape of the `opts` object exclusive to `radixSort`.
+  * `order?: SortOrder;` Sorting order string. Must be either `ascending` or `descending`. See `SortOrder`.
+- `type CountingSortOptions = RadixSortOptions;` (since 0.0.3) Shape of the `opts` object 
+exclusive to `countingSort`.
+
+
 - `function bubbleSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];` 
 Sorts `arr` with bubble-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
 It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
@@ -92,6 +95,15 @@ largest element.
 It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
 
 **Time complexity (best, average and worst):** Quasi-linear ($ O(n \log {n}) $).
+- `function shellSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];`: Sorts `arr` with shell-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
+It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
+
+**Time complexity:** Depends on the gap sequence used. Best known is $ O(n log^2 n) $.
+- `function countingSort(arr: number[], opts?: CountingSortOptions): T[];`: Sorts `arr` with counting-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
+It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
+
+**Time complexity (best, average and worse):** O(n + k), where k is the range of input (maximum 
+element - minimum element + 1).
 
 ## Usage
 ```typescript

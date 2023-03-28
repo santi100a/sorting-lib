@@ -5,3 +5,6 @@
 
 ## Version 0.0.2
 - Added heap sort.
+
+## Version 0.0.3
+- Added counting sort and shell sort.
