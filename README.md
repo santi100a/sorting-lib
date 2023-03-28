@@ -49,7 +49,7 @@ It's fully compatible with `Array.prototype.sort`'s callback. See `SortComparato
 - `type CountingSortOptions = RadixSortOptions;` (since 0.0.3) Shape of the `opts` object 
 exclusive to `countingSort`.
 
-
+### Functions
 - `function bubbleSort<T = unknown>(arr: T[], opts?: SortOptions<T>): T[];` 
 Sorts `arr` with bubble-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
 It takes the array to sort, and optional sorting options, and returns a sorted copy of `arr`.
