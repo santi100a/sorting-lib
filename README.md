@@ -1,6 +1,6 @@
 # Santi's Sorting Library
 
-[![Build Status](https://github.com/santi100a/sorting-lib/actions/workflows/test.yml/badge.svg)](https://github.com/santi100a/sorting-lib/actions)
+[![Build Status](https://github.com/santi100a/sorting-lib/actions/workflows/ci.yml/badge.svg)](https://github.com/santi100a/sorting-lib/actions)
 [![npm homepage](https://img.shields.io/npm/v/@santi100/sorting-lib)](https://npmjs.org/package/@santi100/sorting-lib)
 [![GitHub stars](https://img.shields.io/github/stars/santi100a/sorting-lib.svg)](https://github.com/santi100a/sorting-lib)
 [![License](https://img.shields.io/github/license/santi100a/sorting-lib.svg)](https://github.com/santi100a/sorting-lib)
