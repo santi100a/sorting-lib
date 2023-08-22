@@ -3,7 +3,7 @@ import assertInstanceOf = require('@santi100/assertion-lib/cjs/instance-of');
 import assertOneOf = require('@santi100/assertion-lib/cjs/one-of');
 import assertTypeOf = require('@santi100/assertion-lib/cjs/type-of');
 import shuffle = require('@santi100/array-shuffle');
-import { SortOptions, __defAscending, __defDescending } from './core';
+import { SortOptions, __defAscending, __defDescending, __isSorted } from './core';
 
 /**
  * Sorts `arr` with bogo-sort and returns a new sorted array (i.e.: doesn't mutate `arr`).
@@ -24,18 +24,9 @@ export = function bogoSort<T = unknown>(arr: T[], opts: SortOptions<T> = {}) {
 		comparator = order === 'ascending' ? __defAscending : __defDescending
 	} = opts;
 	assertOneOf(order, 'opts.order', ['ascending', 'descending']);
-	function __isSorted(arr: T[]) {
-		const array = [...arr];
-		let sorted = true;
-		for (let i = 0; i < array.length - 1; i++) {
-			if (comparator(array[i + 1], array[i]) < 0) {
-				sorted = false;
-			}
-		}
-		return sorted;
-	}
+	
 	let array = [...arr];
-
-	while (!__isSorted(array)) array = shuffle(array);
+	
+	while (!__isSorted(array, comparator)) array = shuffle(array);
 	return array;
 };

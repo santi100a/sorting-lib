@@ -16,3 +16,7 @@
 
 - Fixed ESM wrapping issue.
 - Implemented code splitting.
+
+## Version 0.0.5
+
+- Added `bozoSort`.

@@ -1,33 +1,25 @@
-'use strict';
+"use strict";
 exports.__esModule = true;
-exports.shellSort =
-	exports.selectionSort =
-	exports.radixSort =
-	exports.quickSort =
-	exports.mergeSort =
-	exports.insertionSort =
-	exports.heapSort =
-	exports.countingSort =
-	exports.bubbleSort =
-	exports.bogoSort =
-		void 0;
-var bogoSort = require('./bogo-sort');
+exports.shellSort = exports.selectionSort = exports.radixSort = exports.quickSort = exports.mergeSort = exports.insertionSort = exports.heapSort = exports.countingSort = exports.bubbleSort = exports.bozoSort = exports.bogoSort = void 0;
+var bogoSort = require("./bogo-sort");
 exports.bogoSort = bogoSort;
-var bubbleSort = require('./bubble-sort');
+var bozoSort = require("./bozo-sort");
+exports.bozoSort = bozoSort;
+var bubbleSort = require("./bubble-sort");
 exports.bubbleSort = bubbleSort;
-var countingSort = require('./counting-sort');
+var countingSort = require("./counting-sort");
 exports.countingSort = countingSort;
-var heapSort = require('./heap-sort');
+var heapSort = require("./heap-sort");
 exports.heapSort = heapSort;
-var insertionSort = require('./insertion-sort');
+var insertionSort = require("./insertion-sort");
 exports.insertionSort = insertionSort;
-var mergeSort = require('./merge-sort');
+var mergeSort = require("./merge-sort");
 exports.mergeSort = mergeSort;
-var quickSort = require('./quick-sort');
+var quickSort = require("./quick-sort");
 exports.quickSort = quickSort;
-var radixSort = require('./radix-sort');
+var radixSort = require("./radix-sort");
 exports.radixSort = radixSort;
-var selectionSort = require('./selection-sort');
+var selectionSort = require("./selection-sort");
 exports.selectionSort = selectionSort;
-var shellSort = require('./shell-sort');
+var shellSort = require("./shell-sort");
 exports.shellSort = shellSort;

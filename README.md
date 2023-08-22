@@ -118,11 +118,25 @@ largest element.
 **Time complexity (best, average and worse):** $O(n + k)$, where $k$ is the range of input (maximum
 element - minimum element + 1).
 
+- `function bozoSort<T = unknown>(array: T[]): T[];` Sorts an array using the Bozo Sort algorithm.
+  
+  |  Name   |       Description       |
+  | ------- | ----------------------- |
+  | `array` | The array to be sorted. |
+
+- `function bozoSort<T = unknown>(array: T[], opts: SortingOptions<T>): T[];`
+  Sorts an array using the Bozo Sort algorithm.
+  
+  |  Name   |             Description               |
+  | ------- | ------------------------------------- |
+  | `array` | The array to be sorted.               |
+  | `opts`  | An object containing sorting options. |
+
 ## Usage
 
 ```typescript
-import { mergeSort } from '@santi100/sorting-lib'; // ESM
-const { mergeSort } = require('@santi100/sorting-lib'); // CJS
+import { mergeSort, bozoSort } from '@santi100/sorting-lib'; // ESM
+const { mergeSort, bozoSort } = require('@santi100/sorting-lib'); // CJS
 const sorted = mergeSort([4, 2, 5, 1, 3]); // sorted = [1, 2, 3, 4, 5]
 const descendingSorted = mergeSort([4, 2, 5, 1, 3], { order: 'descending' }); // descendingSorted = [5, 4, 3, 2, 1]
 const objSorted = mergeSort(
@@ -141,6 +155,8 @@ const objSorted = mergeSort(
 ); // returns [ { age: 12 }, { age: 23 }, { age: 30 }]
 // You can do same for all algorithms, except for `radixSort`, which is limited to ints for now, so
 // its only option is `order`.
+const sortedArray = bozoSort(array);
+console.log(sortedArray); // Output: [1, 2, 3]
 ```
 
 ## Contribute

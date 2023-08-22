@@ -34,7 +34,7 @@ export interface RadixSortOptions {
 	order?: SortOrder;
 }
 /**
- * Shape of the `opts` object exclusive to {@link countingSort}.
+ * Shape of the `opts` object exclusive to `countingSort`.
  * @since 0.0.3
  */
 export type CountingSortOptions = RadixSortOptions;
@@ -62,4 +62,15 @@ export function __isInteger(num: number) {
 		Number?.isInteger?.(num) ||
 		(num < 0 ? Math.ceil(num) : Math.floor(num)) === num
 	);
+}
+
+export function __isSorted<T>(arr: T[], comparator: SortComparator<T>) {
+	const array = [...arr];
+	let sorted = true;
+	for (let i = 0; i < array.length - 1; i++) {
+		if (comparator(array[i + 1], array[i]) < 0) {
+			sorted = false;
+		}
+	}
+	return sorted;
 }
